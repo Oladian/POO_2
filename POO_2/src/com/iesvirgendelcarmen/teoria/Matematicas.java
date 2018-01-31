@@ -11,6 +11,7 @@ public class Matematicas {
 		factorial(29);
 		Matematicas matematicas = new Matematicas();
 		matematicas.buscarMultiplos(20,3);
+		System.out.println((9*1)+(9*2)+(9*4)+(9*8)+(9*5)+(9*10)+(9*9)+(9*7)+(9*3)+(9*6));
 	}
 	
 	public static long factorial (int numero) {
