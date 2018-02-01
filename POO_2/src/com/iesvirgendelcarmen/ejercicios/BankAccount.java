@@ -1,12 +1,9 @@
 package com.iesvirgendelcarmen.ejercicios;
 
-import java.io.ObjectInputStream.GetField;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import javax.print.attribute.standard.OutputDeviceAssigned;
 
-import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
 
 public class BankAccount {
 	
