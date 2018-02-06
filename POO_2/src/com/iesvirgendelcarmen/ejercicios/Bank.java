@@ -5,18 +5,47 @@ import java.util.List;
 public class Bank {
 	
 	static List<BankAccount> bankAccountList = new ArrayList<>();
+	private String nameBank;
+	private List<BankAccount> listAccount;
 	
-	public static void main(String[] args) {
-	
-		Bank bank = new Bank();
-		
-		bank.suscribeAccounts(4);
-		System.out.println(bankAccountList);
-		System.out.printf("Maximo: %s%n",bank.maxBalance());
-		System.out.printf("Minimo: %s%n",bank.minBalance());
-		System.out.printf("Media: %f%n",bank.averageBalance());
-		
+	public Bank(String nameBank) {
+		this.nameBank = nameBank;
+		this.listAccount = new ArrayList<>();
 	}
+
+	// Hecho por Manolo
+	
+	public boolean addAccount(BankAccount bankAccount) {
+		return listAccount.add(bankAccount);
+	}
+	
+	public boolean removeAccount(BankAccount bankAccount) {
+		return listAccount.remove(bankAccount);
+	}
+	
+	public List<BankAccount> getGreaterBalanceAccount() {
+		List<BankAccount> greaterListAccount = new ArrayList<>();
+		double minBalance = greaterListAccount.get(0).getBalance();
+		
+		BankAccount bankAccountGreaterBalance =	greaterListAccount.get(0);
+		
+		for (BankAccount bankAccount : listAccount) {
+			if (bankAccount.getBalance()>=minBalance) {
+				if (bankAccount.getBalance()>minBalance) {
+					greaterListAccount.clear();
+					minBalance = bankAccount.getBalance();
+					bankAccountGreaterBalance=bankAccount;
+					}
+				greaterListAccount.add(bankAccount);
+			}
+			
+		}
+
+		return greaterListAccount;
+	}
+	
+	
+	// Hecho por mi
 	
 	public void suscribeAccounts(int numberOfAccounts) {
 		for (int i=0; i<numberOfAccounts;i++) {
@@ -31,39 +60,45 @@ public class Bank {
 		}
 	}
 	
-	public String maxBalance() {
-		StringBuilder sBuilderMax = new StringBuilder();
-		sBuilderMax.append(bankAccountList.get(0));
+	public List<String> maxBalance() {
+		List<String> maxList = new ArrayList<>();
 		double max = bankAccountList.get(0).getBalance();
 		
 		if (bankAccountList.size()==0)
-			return "No content";
+			return maxList;
 		
 		for (int i=0; i<bankAccountList.size();i++) {
+			if (bankAccountList.get(i).getBalance()==max) {
+				maxList.add(bankAccountList.get(i)+"");
+			}
 			if (bankAccountList.get(i).getBalance()>max) {
-				sBuilderMax.setLength(0);
+				maxList.clear();
+				maxList.add(bankAccountList.get(i)+"");
 				max = bankAccountList.get(i).getBalance();
-				sBuilderMax.append(bankAccountList.get(i));
 			}
 		}
-		
-		return sBuilderMax+"";
+		return maxList;
 	}
 	
-	public String minBalance() {
-		StringBuilder sBuilderMin = new StringBuilder();
-		sBuilderMin.append(bankAccountList.get(0));
+	public List<String> minBalance() {
+		List<String> minList = new ArrayList<>();
 		double min = bankAccountList.get(0).getBalance();
 		
+		if (bankAccountList.size()==0)
+			return minList;
+		
 		for (int i=0; i<bankAccountList.size();i++) {
+			if (bankAccountList.get(i).getBalance()==min) {
+				minList.add(bankAccountList.get(i)+"");
+			}
+			
 			if (bankAccountList.get(i).getBalance()<min) {
-				sBuilderMin.setLength(0);
+				minList.clear();
+				minList.add(bankAccountList.get(i)+"");
 				min = bankAccountList.get(i).getBalance();
-				sBuilderMin.append(bankAccountList.get(i));
 			}
 		}
-		
-		return sBuilderMin+"";
+		return minList;
 	}
 	
 	public double averageBalance() {
