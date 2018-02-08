@@ -1,53 +1,128 @@
 package com.iesvirgendelcarmen.ejercicios;
 import java.util.ArrayList;
 import java.util.List;
+/**
+ * @Class Bank
+ * @author Izan
+ * @version 1
+ */
+
 
 public class Bank {
 	
 	static List<BankAccount> bankAccountList = new ArrayList<>();
-	private String nameBank;
+	private String bankName;
+	private int coincidencias=0;
 	private List<BankAccount> listAccount;
 	
+	/**
+	 * 
+	 * @param String - nameBank name of the bank
+	 * 
+	 */
+	
 	public Bank(String nameBank) {
-		this.nameBank = nameBank;
+		this.bankName = nameBank;
 		this.listAccount = new ArrayList<>();
 	}
+	
+	
 
 	// Hecho por Manolo
 	
-	public boolean addAccount(BankAccount bankAccount) {
-		return listAccount.add(bankAccount);
-	}
+	/**
+	 * 
+	 * @param bankAccount BankAccount -
+	 * @return true if, only if add a new accounts is saccessfully
+	 * 
+	 */
 	
+	public boolean addAccount(BankAccount bankAccount) {
+		if (listAccount.contains(bankAccount)) {
+			return listAccount.add(bankAccount);
+		}
+		else {
+			coincidencias++;
+			return false; 
+		}
+	}
+	/**
+	 * 
+	 * @return
+	 */
+	public int getCoincidencias() {
+		return coincidencias;
+	}
+	/**
+	 * 
+	 * @param coincidencias
+	 */
+	public void setCoincidencias(int coincidencias) {
+		this.coincidencias = coincidencias;
+	}
+	/**
+	 * 
+	 * @param bankAccount
+	 * @return
+	 */
 	public boolean removeAccount(BankAccount bankAccount) {
 		return listAccount.remove(bankAccount);
 	}
-	
+	/**
+	 * 
+	 * @return
+	 */
 	public List<BankAccount> getGreaterBalanceAccount() {
-		List<BankAccount> greaterListAccount = new ArrayList<>();
-		double minBalance = greaterListAccount.get(0).getBalance();
 		
-		BankAccount bankAccountGreaterBalance =	greaterListAccount.get(0);
+		List<BankAccount> listGreaterAccount = new ArrayList<>();
+		double maxBalance = listAccount.get(0).getBalance();
 		
 		for (BankAccount bankAccount : listAccount) {
-			if (bankAccount.getBalance()>=minBalance) {
-				if (bankAccount.getBalance()>minBalance) {
-					greaterListAccount.clear();
-					minBalance = bankAccount.getBalance();
-					bankAccountGreaterBalance=bankAccount;
+			if (bankAccount.getBalance()>=maxBalance) {
+				if (bankAccount.getBalance()>maxBalance) {
+					listGreaterAccount.clear();
+					maxBalance = bankAccount.getBalance();
 					}
-				greaterListAccount.add(bankAccount);
-			}
-			
+				listGreaterAccount.add(bankAccount);
+			}	
 		}
-
-		return greaterListAccount;
+		return listGreaterAccount;
 	}
-	
-	
+	/**
+	 * 
+	 * @return
+	 */
+	public List<BankAccount> getSmallerBalanceAccount() {
+		
+		List<BankAccount> listSmallerAccount = new ArrayList<>();
+		double minBalance = listAccount.get(0).getBalance();
+		
+		for (BankAccount bankAccount : listAccount) { // listAccount.size()
+			if (bankAccount.getBalance()<=minBalance) {
+				if (bankAccount.getBalance()<minBalance) {
+					listSmallerAccount.clear();
+					minBalance = bankAccount.getBalance();
+					}
+				listSmallerAccount.add(bankAccount);
+			}	
+		}
+		return listSmallerAccount;
+	}
+	/**
+	 * 
+	 * @return
+	 */
+	public double calculateAverageBalance() {
+		double sum=0;
+		for (BankAccount bankAccount : listAccount) {
+			sum+=bankAccount.getBalance();
+		}
+		return sum/listAccount.size();
+	}
 	// Hecho por mi
-	
+/*	
 	public void suscribeAccounts(int numberOfAccounts) {
+
 		for (int i=0; i<numberOfAccounts;i++) {
 			bankAccountList.add(new BankAccount((int)(Math.random()*10),3));
 		}
@@ -100,6 +175,12 @@ public class Bank {
 		}
 		return minList;
 	}
+*/	
+	
+	/**
+	 * 
+	 * @return
+	 */
 	
 	public double averageBalance() {
 		double sum=0;
@@ -109,4 +190,18 @@ public class Bank {
 		}
 		return sum/bankAccountList.size();
 	}
+	
+	/**
+	 * 
+	 */
+	
+	@Override
+	public String toString() {
+		return "Bank [bankName=" + bankName + ", listAccount=" + listAccount + ", getGreaterBalanceAccount()="
+				+ getGreaterBalanceAccount() + ", getSmallerBalanceAccount()=" + getSmallerBalanceAccount()
+				+ ", calculateAverageBalance()=" + Math.round(100*calculateAverageBalance())/100.0 + "]"; 
+	}
+
+	
+	
 }

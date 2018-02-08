@@ -26,6 +26,7 @@ public class BankAccount {
 		this.balance = balance;
 		this.interest = interest;
 		accountsAmount++;
+		getCreationDate();
 	}
 	
 	private String accountNumberGenerator () {
@@ -41,7 +42,7 @@ public class BankAccount {
 	//private String outPut = accountNumberGenerator();
 	
 	private String getDigitsOfAccount() {    // Generar los dígitos de control con inner class
-		String digit;
+		//String digit;
 		String outPut = accountNumberGenerator();
 		class FirstDigitControl{
 			private int generateDigit() {
@@ -187,12 +188,36 @@ public class BankAccount {
 	public void setCreationDate(LocalDate creationDate) {
 		this.creationDate = creationDate;
 	}
-	
-
 
 	@Override
 	public String toString() {
 		return "BankAccount [Balance= " + balance + ", Account Number= " + accountNumber + "]";
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((accountNumber == null) ? 0 : accountNumber.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		BankAccount other = (BankAccount) obj;
+		if (accountNumber == null) {
+			if (other.accountNumber != null)
+				return false;
+		} else if (!accountNumber.equals(other.accountNumber))
+			return false;
+		return true;
+	}
+
+	
 }
